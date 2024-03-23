@@ -51,7 +51,7 @@ const verifyToken = (req, res, next) => {
 };
 
 
-app.get("/test", (req, res)=>{
+app.get("/test", verifyToken, (req, res)=>{
     res.send("BLAH!")
 })
 
