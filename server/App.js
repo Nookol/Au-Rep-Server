@@ -51,6 +51,10 @@ const verifyToken = (req, res, next) => {
 };
 
 
+app.get("/test", (req, res)=>{
+    res.send("BLAH!")
+})
+
 
 app.post("/register", async (req, res) => {
     const email = req.body.email;
@@ -80,6 +84,7 @@ app.get("/getReports", verifyToken, (req, res) => {
     console.log(req)
     res.send(`Welcome user ${req.user.email}, this route is protected.`);
 });
+
 io.on('connection', (socket) =>{
   socket.on("message", (msg) =>{
     console.log(msg);
