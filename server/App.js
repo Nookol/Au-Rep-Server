@@ -11,9 +11,9 @@ const http = require("http");
 const server = http.createServer(app);
 const {Server} = require("socket.io");
 const io = new Server(server, {
-  cors: {
-    origin: '*'
-  }
+    cors: {
+        origin: '*'
+    }
 });
 const serviceAccount = require("./au-report-bbe7d-firebase-adminsdk-rm0f2-5424c5388d.json");
 const db = require('./util/db.js')
@@ -32,19 +32,19 @@ app.use(ReportRouter);
 app.use(ResetRouter);
 
 const verifyToken = (req, res, next) => {
-  const idToken = req.headers.authorization;
-  userData = req.user;
-  admin
-      .auth()
-      .verifyIdToken(idToken)
-      .then((decodedToken) => {
-        req.user = decodedToken; // Adding decoded user information to the request object
-        next();
-      })
-      .catch((error) => {
-        console.error("Error while verifying Firebase ID token:", error);
-        res.status(403).send("Unauthorized");
-      });
+    const idToken = req.headers.authorization;
+    userData = req.user;
+    admin
+        .auth()
+        .verifyIdToken(idToken)
+        .then((decodedToken) => {
+            req.user = decodedToken; // Adding decoded user information to the request object
+            next();
+        })
+        .catch((error) => {
+            console.error("Error while verifying Firebase ID token:", error);
+            res.status(403).send("Unauthorized");
+        });
 
 };
 
@@ -67,19 +67,15 @@ app.post("/register", async (req, res) => {
 });
 
 io.on('connection', (socket) =>{
-  socket.on("message", (msg) =>{
-    console.log(msg);
-    io.emit("data", msg);
-  })
+    socket.on("message", (msg) =>{
+        console.log(msg);
+        io.emit("data", msg);
+    })
 })
 
 app.post('/getUserInfo', async (req, res) => {
+    console.log("GETUSERINFO HERE _______FA_SDFA")
     const email = req.body.email;
-    console.log("-------------------------------")
-    console.log("-------------------------------\n")
-    console.log(email)
-    console.log("\n-------------------------------")
-    console.log("-------------------------------")
     const query = `SELECT firstname, lastname, userId FROM users WHERE email = $1`;
     try {
         const result = await db.query(query, [email]);
