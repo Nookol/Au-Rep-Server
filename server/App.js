@@ -75,6 +75,11 @@ io.on('connection', (socket) =>{
 
 app.post('/getUserInfo', async (req, res) => {
     const email = req.body.email;
+    console.log("-------------------------------")
+    console.log("-------------------------------\n")
+    console.log(email)
+    console.log("\n-------------------------------")
+    console.log("-------------------------------")
     const query = `SELECT firstname, lastname, userId FROM users WHERE email = $1`;
     try {
         const result = await db.query(query, [email]);
