@@ -40,28 +40,6 @@ class MyReportsModel {
 
     }
 
-    getLocations = async () => {
-        const query = `select * from buildings`;
-        try{
-            const result = await client.query(query);
-            return result.rows;
-
-        }catch(err){
-            console.log(err);
-        }
-
-    }
-
-    getRooms = async (buildingId) => {
-        console.log(buildingId)
-        const query = `SELECT * FROM rooms WHERE buildingId = $1`;
-        try {
-            const result = await client.query(query, [buildingId]);
-            return result.rows;
-        } catch (err) {
-            console.log(err);
-        }
-    }
 }
 
 module.exports = MyReportsModel;
