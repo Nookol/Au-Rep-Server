@@ -66,15 +66,14 @@ app.post("/register", async (req, res) => {
     }
 });
 
-io.on('connection', (socket) =>{
-    socket.on("message", (msg) =>{
+io.on('connection', (socket) => {
+    socket.on("message", (msg) => {
         console.log(msg);
         io.emit("data", msg);
     })
 })
 
 app.post('/getUserInfo', async (req, res) => {
-    console.log("GETUSERINFO HERE _______FA_SDFA")
     const email = req.body.email;
     const query = `SELECT firstname, lastname, userId FROM users WHERE email = $1`;
     try {
