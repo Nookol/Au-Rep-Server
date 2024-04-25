@@ -41,10 +41,11 @@ class MyReportsModel {
 
     showMyReports = async (userid, status) => {
         const query = `
-        SELECT reports.*, details.description as note
+        SELECT reports.*, array_agg(details.description) AS notes
         FROM reports
-        JOIN details ON reports.reportid = details.reportid
+        LEFT JOIN details ON reports.reportid = details.reportid
         WHERE reports.userid = $1 AND reports.status = $2
+        GROUP BY reports.reportid
     `;
         try {
             const result = await client.query(query, [userid, status]);
@@ -53,6 +54,8 @@ class MyReportsModel {
             console.log(err);
         }
     }
+
+
 
     getLocations = async () => {
         const query = `select * from buildings`;
