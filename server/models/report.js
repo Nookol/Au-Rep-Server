@@ -28,16 +28,30 @@ class MyReportsModel {
     }
 
 
+    // showMyReports = async (userid, status) => {
+    //     const query = `select * from reports where userid=$1 AND status=$2`;
+    //     try{
+    //         const result = await client.query(query, [userid, status]);
+    //         return result.rows;
+    //
+    //     }catch(err){
+    //         console.log(err);
+    //     }
+    // }
+
     showMyReports = async (userid, status) => {
-        const query = `select * from reports where userid=$1 AND status=$2`;
-        try{
+        const query = `
+        SELECT reports.*, details.description as note
+        FROM reports
+        JOIN details ON reports.reportid = details.reportid
+        WHERE reports.userid = $1 AND reports.status = $2
+    `;
+        try {
             const result = await client.query(query, [userid, status]);
             return result.rows;
-
-        }catch(err){
+        } catch (err) {
             console.log(err);
         }
-
     }
 
     getLocations = async () => {
