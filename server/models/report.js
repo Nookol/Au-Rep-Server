@@ -56,6 +56,24 @@ class MyReportsModel {
     }
 
 
+    getBuildingAndRoom = async (bID,rID) => {
+        const buildingQuery = `SELECT buildingname FROM buildings WHERE buildingid = $1`;
+        const roomQuery = `SELECT roomname FROM rooms WHERE roomid = $1`;
+
+        try {
+            const buildingResult = await client.query(buildingQuery, [bID]);
+            const buildingName = buildingResult.rows[0].buildingname;
+            const roomResult = await client.query(roomQuery, [rID]);
+            const roomName = roomResult.rows[0].roomname;
+
+            return { building: buildingName, room: roomName };
+        } catch (error) {
+            console.error('Error fetching building and room data:', error);
+            return null;
+        }
+    };
+
+
 
     getLocations = async () => {
         const query = `select * from buildings`;

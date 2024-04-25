@@ -31,6 +31,14 @@ const getLocations = async (req, res) =>{
     res.send(results)
 }
 
+const getLocationDetails = async (req, res) =>{
+    const rID =req.params.rID
+    const bID =req.params.bID
+    const results = await reportModel.getBuildingAndRoom(bID,rID)
+    console.log(results)
+    res.send(results)
+}
+
 const getRooms = async (req, res) =>{
     const building = req.params.buildingId;
     console.log(building)
@@ -38,4 +46,4 @@ const getRooms = async (req, res) =>{
     console.log(results)
     res.send(results)
 }
-module.exports = {postCreateReport, getUserReportsByStatus, getLocations, getRooms};
+module.exports = { getLocationDetails, postCreateReport, getUserReportsByStatus, getLocations, getRooms};
